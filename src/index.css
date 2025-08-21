@@ -56,15 +56,20 @@
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-medical: linear-gradient(135deg, hsl(200 95% 45%), hsl(165 70% 50%));
     --gradient-emergency: linear-gradient(135deg, hsl(var(--emergency)), hsl(15 85% 65%));
+    --gradient-success: linear-gradient(135deg, hsl(var(--success)), hsl(145 60% 60%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 25% 98%));
     
     /* Medical shadows */
     --shadow-medical: 0 4px 20px -2px hsl(var(--primary) / 0.15);
     --shadow-soft: 0 2px 10px -2px hsl(210 15% 12% / 0.08);
     --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.3);
+    --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-hover: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-fast: all 0.15s ease-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -130,4 +135,72 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  /* Enhanced button animations */
+  .btn-hover {
+    @apply transition-all duration-200 hover:scale-105 hover:shadow-hover;
+  }
+  
+  /* Card animations */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-hover hover:-translate-y-1;
+  }
+  
+  /* Fade in animation */
+  .fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Slide in from right */
+  .slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  /* Pulse animation for loading */
+  .pulse-soft {
+    animation: pulseSoft 2s infinite;
+  }
+  
+  /* Chat bubble animations */
+  .chat-bubble {
+    @apply animate-in slide-in-from-left-2 fade-in duration-300;
+  }
+  
+  .chat-bubble-user {
+    @apply animate-in slide-in-from-right-2 fade-in duration-300;
+  }
+}
+
+@layer utilities {
+  /* Custom keyframe animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  
+  /* Typing indicator animation */
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+  }
+  
+  .typing-dot {
+    animation: typing 1.4s infinite ease-in-out;
+  }
+  
+  .typing-dot:nth-child(1) { animation-delay: 0s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 }
