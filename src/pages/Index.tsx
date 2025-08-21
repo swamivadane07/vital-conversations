@@ -1,7 +1,7 @@
-import MedicalChatbot from "@/components/MedicalChatbot";
+import { Navigate } from "react-router-dom";
 
 const Index = () => {
-  return <MedicalChatbot />;
+  return <Navigate to="/" replace />;
 };
 
 export default Index;
