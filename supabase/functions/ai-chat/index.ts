@@ -29,13 +29,19 @@ Patient: ${message}
 
 AI Doctor:`;
 
-    // Use Hugging Face Inference API (free tier)
+    // Use Hugging Face Inference API with authentication
+    const hfToken = Deno.env.get('HUGGING_FACE_ACCESS_TOKEN');
+    if (!hfToken) {
+      throw new Error('Hugging Face access token not configured');
+    }
+
     const response = await fetch(
       'https://api-inference.huggingface.co/models/microsoft/DialoGPT-large',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${hfToken}`,
         },
         body: JSON.stringify({
           inputs: medicalPrompt,
