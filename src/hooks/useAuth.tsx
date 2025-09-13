@@ -8,6 +8,8 @@ interface AuthContextType {
   session: Session | null
   signUp: (email: string, password: string, userData?: { firstName?: string; lastName?: string }) => Promise<{ error: any }>
   signIn: (email: string, password: string) => Promise<{ error: any }>
+  signInWithOTP: (email: string) => Promise<{ error: any }>
+  verifyOTP: (email: string, token: string) => Promise<{ error: any }>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<{ error: any }>
   loading: boolean
@@ -93,6 +95,53 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return { error }
   }
 
+  const signInWithOTP = async (email: string) => {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: false, // Only allow existing users
+      }
+    })
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "OTP request failed",
+        description: error.message
+      })
+    } else {
+      toast({
+        title: "OTP Sent!",
+        description: "Check your email for the verification code."
+      })
+    }
+
+    return { error }
+  }
+
+  const verifyOTP = async (email: string, token: string) => {
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'email'
+    })
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "OTP verification failed",
+        description: error.message
+      })
+    } else {
+      toast({
+        title: "Login successful!",
+        description: "Welcome back!"
+      })
+    }
+
+    return { error }
+  }
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
@@ -132,6 +181,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     session,
     signUp,
     signIn,
+    signInWithOTP,
+    verifyOTP,
     signOut,
     resetPassword,
     loading

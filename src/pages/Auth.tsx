@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Eye, EyeOff, Shield, Heart, Users, Clock, Globe, Mail, Lock, User, Phone } from 'lucide-react'
+import { Eye, EyeOff, Shield, Heart, Users, Clock, Globe, Mail, Lock, User, Phone, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { useAuth } from '@/hooks/useAuth'
 import { supabase } from '@/integrations/supabase/client'
+import { OTPLogin } from '@/components/auth/OTPLogin'
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -46,7 +47,7 @@ type SignupForm = z.infer<typeof signupSchema>
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
 
 export default function Auth() {
-  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login')
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot' | 'otp'>('login')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [language, setLanguage] = useState('en')
@@ -246,16 +247,18 @@ export default function Auth() {
                     {mode === 'login' && 'Welcome Back'}
                     {mode === 'signup' && 'Create Account'}
                     {mode === 'forgot' && 'Reset Password'}
+                    {mode === 'otp' && 'Login with OTP'}
                   </CardTitle>
                   <CardDescription className="text-muted-foreground">
                     {mode === 'login' && 'Sign in to access your health dashboard'}
                     {mode === 'signup' && 'Join thousands of users managing their health'}
                     {mode === 'forgot' && 'Enter your email to receive reset instructions'}
+                    {mode === 'otp' && 'Secure login with one-time password'}
                   </CardDescription>
                 </div>
 
                 {/* Social Login Buttons */}
-                {mode !== 'forgot' && (
+                {mode !== 'forgot' && mode !== 'otp' && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <Button 
@@ -391,6 +394,21 @@ export default function Auth() {
                       </Button>
                     </form>
                   </Form>
+                )}
+
+                {/* OTP Login */}
+                {mode === 'otp' && (
+                  <div>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setMode('login')}
+                      className="mb-4"
+                    >
+                      <ArrowLeft className="h-4 w-4 mr-2" />
+                      Back to Password Login
+                    </Button>
+                    <OTPLogin />
+                  </div>
                 )}
 
                 {/* Signup Form */}
@@ -600,14 +618,39 @@ export default function Auth() {
                 {/* Mode Toggle */}
                 <div className="text-center space-y-2">
                   {mode === 'login' && (
+                    <>
+                      <p className="text-sm text-muted-foreground">
+                        Don't have an account?{' '}
+                        <Button
+                          variant="link"
+                          onClick={() => setMode('signup')}
+                          className="p-0 font-normal text-primary hover:underline"
+                        >
+                          Sign up here
+                        </Button>
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Prefer secure login?{' '}
+                        <Button
+                          variant="link"
+                          onClick={() => setMode('otp')}
+                          className="p-0 font-normal text-primary hover:underline"
+                        >
+                          Use OTP instead
+                        </Button>
+                      </p>
+                    </>
+                  )}
+                  
+                  {mode === 'otp' && (
                     <p className="text-sm text-muted-foreground">
-                      Don't have an account?{' '}
+                      Want to use password?{' '}
                       <Button
                         variant="link"
-                        onClick={() => setMode('signup')}
+                        onClick={() => setMode('login')}
                         className="p-0 font-normal text-primary hover:underline"
                       >
-                        Sign up here
+                        Password login
                       </Button>
                     </p>
                   )}
