@@ -2,6 +2,8 @@ import { useState } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { ChatArea } from "@/components/chat/ChatArea";
 import { MedicalSidebar } from "@/components/sidebar/MedicalSidebar";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export interface Message {
   id: string;
@@ -19,6 +21,7 @@ const MedicalChatbot = () => {
       timestamp: new Date()
     }
   ]);
+  const { toast } = useToast();
 
   const addMessage = (content: string, role: "user" | "assistant") => {
     const newMessage: Message = {
@@ -34,13 +37,47 @@ const MedicalChatbot = () => {
     // Add user message
     addMessage(content, "user");
     
-    // Simulate AI response (replace with actual API call when backend is ready)
-    setTimeout(() => {
-      const response = `Thank you for your question about "${content}". This is a simulated response. 
+    try {
+      console.log('Sending message to AI chat:', content);
+      
+      // Get conversation history for context
+      const conversation = messages.map(msg => ({
+        role: msg.role === "assistant" ? "assistant" : "user",
+        content: msg.content
+      }));
 
-⚠️ I'm an AI assistant, not a doctor. Please consult a healthcare professional for medical decisions.`;
-      addMessage(response, "assistant");
-    }, 1000);
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: { 
+          message: content,
+          conversation: conversation
+        }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('AI chat response:', data);
+      
+      const aiResponse = data?.response || "I apologize, but I'm having trouble processing your request right now. Please try again later, and remember to consult healthcare professionals for urgent medical concerns.";
+      
+      addMessage(aiResponse, "assistant");
+      
+    } catch (error) {
+      console.error('Error calling AI chat:', error);
+      toast({
+        variant: "destructive",
+        title: "Chat Error",
+        description: "Failed to get AI response. Please try again."
+      });
+      
+      // Add fallback response
+      addMessage(
+        "I'm experiencing technical difficulties right now. Please try again later, and remember to consult healthcare professionals for urgent medical concerns.",
+        "assistant"
+      );
+    }
   };
 
   return (
