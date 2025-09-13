@@ -47,7 +47,7 @@ type SignupForm = z.infer<typeof signupSchema>
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
 
 export default function Auth() {
-  const [mode, setMode] = useState<'signup' | 'forgot' | 'otp'>('otp')
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot' | 'otp'>('login')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [language, setLanguage] = useState('en')
@@ -103,14 +103,14 @@ export default function Auth() {
       lastName: data.lastName
     })
     if (!error) {
-      setMode('otp')
+      setMode('login')
     }
   }
 
   const onForgotPassword = async (data: ForgotPasswordForm) => {
     const { error } = await resetPassword(data.email)
     if (!error) {
-      setMode('otp')
+      setMode('login')
     }
   }
 
@@ -244,14 +244,16 @@ export default function Auth() {
               <CardHeader className="space-y-4">
                 <div className="text-center">
                   <CardTitle className="text-2xl font-bold">
+                    {mode === 'login' && 'Welcome Back'}
                     {mode === 'signup' && 'Create Account'}
                     {mode === 'forgot' && 'Reset Password'}
-                    {mode === 'otp' && 'Secure Login'}
+                    {mode === 'otp' && 'Login with OTP'}
                   </CardTitle>
                   <CardDescription className="text-muted-foreground">
+                    {mode === 'login' && 'Sign in to access your health dashboard'}
                     {mode === 'signup' && 'Join thousands of users managing their health'}
                     {mode === 'forgot' && 'Enter your email to receive reset instructions'}
-                    {mode === 'otp' && 'Login with one-time password via email'}
+                    {mode === 'otp' && 'Secure login with one-time password'}
                   </CardDescription>
                 </div>
 
@@ -297,8 +299,117 @@ export default function Auth() {
               </CardHeader>
 
               <CardContent className="space-y-6">
+                {/* Login Form */}
+                {mode === 'login' && (
+                  <Form {...loginForm}>
+                    <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                      <FormField
+                        control={loginForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center space-x-2">
+                              <Mail className="h-4 w-4" />
+                              <span>Email Address</span>
+                            </FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="Enter your email"
+                                type="email"
+                                {...field}
+                                className="transition-all duration-200 focus:scale-[1.02]"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={loginForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center space-x-2">
+                              <Lock className="h-4 w-4" />
+                              <span>Password</span>
+                            </FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Input 
+                                  placeholder="Enter your password"
+                                  type={showPassword ? "text" : "password"}
+                                  {...field}
+                                  className="pr-10 transition-all duration-200 focus:scale-[1.02]"
+                                />
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                >
+                                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </Button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="flex items-center justify-between">
+                        <FormField
+                          control={loginForm.control}
+                          name="rememberMe"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <div className="space-y-1 leading-none">
+                                <FormLabel className="text-sm font-normal">
+                                  Remember me
+                                </FormLabel>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <Button
+                          variant="link"
+                          type="button"
+                          onClick={() => setMode('forgot')}
+                          className="px-0 font-normal text-primary hover:underline"
+                        >
+                          Forgot password?
+                        </Button>
+                      </div>
+
+                      <Button type="submit" className="w-full hover:scale-[1.02] transition-transform">
+                        Sign In Securely
+                      </Button>
+                    </form>
+                  </Form>
+                )}
+
                 {/* OTP Login */}
-                {mode === 'otp' && <OTPLogin />}
+                {mode === 'otp' && (
+                  <div>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setMode('login')}
+                      className="mb-4"
+                    >
+                      <ArrowLeft className="h-4 w-4 mr-2" />
+                      Back to Password Login
+                    </Button>
+                    <OTPLogin />
+                  </div>
+                )}
 
                 {/* Signup Form */}
                 {mode === 'signup' && (
@@ -506,7 +617,7 @@ export default function Auth() {
 
                 {/* Mode Toggle */}
                 <div className="text-center space-y-2">
-                  {mode === 'otp' && (
+                  {mode === 'login' && (
                     <>
                       <p className="text-sm text-muted-foreground">
                         Don't have an account?{' '}
@@ -519,16 +630,29 @@ export default function Auth() {
                         </Button>
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Forgot your password?{' '}
+                        Prefer secure login?{' '}
                         <Button
                           variant="link"
-                          onClick={() => setMode('forgot')}
+                          onClick={() => setMode('otp')}
                           className="p-0 font-normal text-primary hover:underline"
                         >
-                          Reset password
+                          Use OTP instead
                         </Button>
                       </p>
                     </>
+                  )}
+                  
+                  {mode === 'otp' && (
+                    <p className="text-sm text-muted-foreground">
+                      Want to use password?{' '}
+                      <Button
+                        variant="link"
+                        onClick={() => setMode('login')}
+                        className="p-0 font-normal text-primary hover:underline"
+                      >
+                        Password login
+                      </Button>
+                    </p>
                   )}
                   
                   {mode === 'signup' && (
@@ -536,7 +660,7 @@ export default function Auth() {
                       Already have an account?{' '}
                       <Button
                         variant="link"
-                        onClick={() => setMode('otp')}
+                        onClick={() => setMode('login')}
                         className="p-0 font-normal text-primary hover:underline"
                       >
                         Sign in here
@@ -549,7 +673,7 @@ export default function Auth() {
                       Remember your password?{' '}
                       <Button
                         variant="link"
-                        onClick={() => setMode('otp')}
+                        onClick={() => setMode('login')}
                         className="p-0 font-normal text-primary hover:underline"
                       >
                         Back to login
