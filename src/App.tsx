@@ -22,6 +22,7 @@ import OrderTracking from "./pages/pharmacy/OrderTracking";
 import OrderHistory from "./pages/pharmacy/OrderHistory";
 import PharmacyProfile from "./pages/pharmacy/PharmacyProfile";
 import PharmacyDashboard from "./pages/pharmacy/PharmacyDashboard";
+import OnlineStore from "./pages/OnlineStore";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="pharmacy/track" element={<OrderTracking />} />
             <Route path="pharmacy/orders" element={<OrderHistory />} />
             <Route path="pharmacy/profile" element={<PharmacyProfile />} />
+            <Route path="online-store" element={<OnlineStore />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -15,7 +15,8 @@ import {
   Search,
   Mic,
   Zap,
-  Pill
+  Pill,
+  Store
 } from "lucide-react";
 import {
   Sidebar,
@@ -68,6 +69,12 @@ export const MainSidebar = () => {
       icon: Pill,
       path: "/pharmacy",
       description: "Online medicine delivery"
+    },
+    {
+      title: "Online Store",
+      icon: Store,
+      path: "/online-store",
+      description: "Browse medicine catalog"
     }
   ];
 
