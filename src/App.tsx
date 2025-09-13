@@ -16,6 +16,7 @@ import HealthDashboard from "./pages/HealthDashboard";
 import AdvancedSearch from "./pages/AdvancedSearch";
 import VoiceInput from "./pages/VoiceInput";
 import AIAnalysis from "./pages/AIAnalysis";
+import MedicalRecords from "./pages/MedicalRecords";
 import NotFound from "./pages/NotFound";
 import Pharmacy from "./pages/Pharmacy";
 import PrescriptionUpload from "./pages/pharmacy/PrescriptionUpload";
@@ -52,6 +53,7 @@ const App = () => (
                 <Route path="advanced-search" element={<AdvancedSearch />} />
                 <Route path="voice-input" element={<VoiceInput />} />
                 <Route path="ai-analysis" element={<AIAnalysis />} />
+                <Route path="medical-records" element={<MedicalRecords />} />
                 <Route path="pharmacy" element={<PharmacyDashboard />} />
                 <Route path="pharmacy/upload-prescription" element={<PrescriptionUpload />} />
                 <Route path="pharmacy/catalog" element={<MedicineCatalog />} />

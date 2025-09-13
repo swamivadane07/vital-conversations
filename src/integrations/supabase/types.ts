@@ -14,36 +14,239 @@ export type Database = {
   }
   public: {
     Tables: {
-      profiles: {
+      allergies: {
+        Row: {
+          allergen: string
+          created_at: string
+          id: string
+          notes: string | null
+          reaction: string | null
+          severity: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allergen: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reaction?: string | null
+          severity?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allergen?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reaction?: string | null
+          severity?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "allergies_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      medical_documents: {
+        Row: {
+          document_name: string
+          document_type: string
+          file_path: string
+          file_size: number | null
+          id: string
+          mime_type: string | null
+          notes: string | null
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          document_name: string
+          document_type: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          notes?: string | null
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          document_name?: string
+          document_type?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          notes?: string | null
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_documents_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      medical_history: {
+        Row: {
+          condition_name: string
+          created_at: string
+          description: string | null
+          diagnosis_date: string | null
+          doctor_name: string | null
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          condition_name: string
+          created_at?: string
+          description?: string | null
+          diagnosis_date?: string | null
+          doctor_name?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          condition_name?: string
+          created_at?: string
+          description?: string | null
+          diagnosis_date?: string | null
+          doctor_name?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      prescriptions: {
         Row: {
           created_at: string
-          date_of_birth: string | null
-          first_name: string | null
+          dosage: string
+          end_date: string | null
+          frequency: string
           id: string
-          last_name: string | null
-          phone: string | null
+          instructions: string | null
+          medication_name: string
+          prescribed_by: string | null
+          prescribed_date: string | null
+          start_date: string | null
+          status: string
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          date_of_birth?: string | null
-          first_name?: string | null
+          dosage: string
+          end_date?: string | null
+          frequency: string
           id?: string
-          last_name?: string | null
-          phone?: string | null
+          instructions?: string | null
+          medication_name: string
+          prescribed_by?: string | null
+          prescribed_date?: string | null
+          start_date?: string | null
+          status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
+          dosage?: string
+          end_date?: string | null
+          frequency?: string
+          id?: string
+          instructions?: string | null
+          medication_name?: string
+          prescribed_by?: string | null
+          prescribed_date?: string | null
+          start_date?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          blood_type: string | null
+          created_at: string
+          date_of_birth: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          first_name: string | null
+          height_cm: number | null
+          id: string
+          last_name: string | null
+          medical_notes: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+          weight_kg: number | null
+        }
+        Insert: {
+          blood_type?: string | null
+          created_at?: string
           date_of_birth?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
           first_name?: string | null
+          height_cm?: number | null
           id?: string
           last_name?: string | null
+          medical_notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+          weight_kg?: number | null
+        }
+        Update: {
+          blood_type?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          first_name?: string | null
+          height_cm?: number | null
+          id?: string
+          last_name?: string | null
+          medical_notes?: string | null
           phone?: string | null
           updated_at?: string
           user_id?: string
+          weight_kg?: number | null
         }
         Relationships: []
       }
