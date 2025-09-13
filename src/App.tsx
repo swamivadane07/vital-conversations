@@ -8,6 +8,9 @@ import Chat from "./pages/Chat";
 import Doctors from "./pages/Doctors";
 import LabTests from "./pages/LabTests";
 import HealthDashboard from "./pages/HealthDashboard";
+import AdvancedSearch from "./pages/AdvancedSearch";
+import VoiceInput from "./pages/VoiceInput";
+import AIAnalysis from "./pages/AIAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +27,9 @@ const App = () => (
             <Route path="doctors" element={<Doctors />} />
             <Route path="lab-tests" element={<LabTests />} />
             <Route path="health-dashboard" element={<HealthDashboard />} />
+            <Route path="advanced-search" element={<AdvancedSearch />} />
+            <Route path="voice-input" element={<VoiceInput />} />
+            <Route path="ai-analysis" element={<AIAnalysis />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -11,7 +11,10 @@ import {
   Heart,
   Brain,
   Activity,
-  Home
+  Home,
+  Search,
+  Mic,
+  Zap
 } from "lucide-react";
 import {
   Sidebar,
@@ -58,6 +61,27 @@ export const MainSidebar = () => {
       icon: TestTube,
       path: "/lab-tests",
       description: "Book diagnostic tests"
+    }
+  ];
+
+  const advancedFeatures = [
+    {
+      title: "Advanced Search",
+      icon: Search,
+      path: "/advanced-search",
+      description: "Powerful search with filters"
+    },
+    {
+      title: "Voice Input",
+      icon: Mic,
+      path: "/voice-input",
+      description: "Voice symptom analysis"
+    },
+    {
+      title: "AI Analysis",
+      icon: Zap,
+      path: "/ai-analysis",
+      description: "Advanced AI health insights"
     }
   ];
 
@@ -139,6 +163,39 @@ export const MainSidebar = () => {
                       <div className="text-left">
                         <div className="font-medium text-sm">{item.title}</div>
                         <div className="text-xs text-muted-foreground">{item.description}</div>
+                      </div>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Advanced Features */}
+        <SidebarGroup className="mt-6">
+          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-3">
+            AI-Powered Tools
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-2">
+              {advancedFeatures.map((item) => (
+                <SidebarMenuItem key={item.path}>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to={item.path}
+                      className={({ isActive }) => 
+                        `w-full p-3 rounded-lg border transition-all hover:shadow-soft flex items-center gap-3 ${
+                          isActive 
+                            ? 'bg-gradient-primary text-white shadow-glow' 
+                            : 'bg-card hover:bg-muted/50 text-foreground border-primary/20'
+                        }`
+                      }
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">{item.title}</div>
+                        <div className="text-xs opacity-80">{item.description}</div>
                       </div>
                     </NavLink>
                   </SidebarMenuButton>

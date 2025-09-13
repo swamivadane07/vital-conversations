@@ -6,9 +6,6 @@ import { Input } from "@/components/ui/input";
 import { ShoppingCart, Search, Clock, MapPin, Plus, Minus } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { LabTestCart } from "@/components/labtests/LabTestCart";
-import { AdvancedSearch } from "@/components/advanced/AdvancedSearch";
-import { SmartSymptomPredictor } from "@/components/advanced/SmartSymptomPredictor";
-import { VoiceSymptomInput } from "@/components/advanced/VoiceSymptomInput";
 
 interface LabTest {
   id: string;
@@ -175,44 +172,6 @@ const LabTests = () => {
             />
           </DialogContent>
         </Dialog>
-      </div>
-
-      {/* Advanced Features */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="card-hover shadow-card">
-          <CardHeader>
-            <CardTitle className="text-lg">Advanced Search</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AdvancedSearch onResultSelect={(result) => {
-              if (result.type === 'lab-test') {
-                setSearchTerm(result.title);
-              }
-            }} />
-          </CardContent>
-        </Card>
-        
-        <Card className="card-hover shadow-card">
-          <CardHeader>
-            <CardTitle className="text-lg">Voice Search</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <VoiceSymptomInput onSymptomDetected={(symptoms) => {
-              if (symptoms.length > 0) {
-                setSearchTerm(symptoms.join(' '));
-              }
-            }} />
-          </CardContent>
-        </Card>
-        
-        <Card className="card-hover shadow-card">
-          <CardHeader>
-            <CardTitle className="text-lg">Smart Recommendations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <SmartSymptomPredictor symptoms={[]} />
-          </CardContent>
-        </Card>
       </div>
 
       {/* Search and Filters */}
