@@ -124,14 +124,14 @@ const Doctors = () => {
       {/* Doctors Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDoctors.map((doctor) => (
-          <Card key={doctor.id} className="card-hover shadow-card bg-gradient-card">
+          <Card key={doctor.id} className="card-hover shadow-card bg-gradient-card flex flex-col h-full">
             <CardHeader className="pb-4">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gradient-medical rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                <div className="w-16 h-16 bg-gradient-medical rounded-full flex items-center justify-center text-white font-semibold text-lg shadow-glow">
                   {doctor.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="flex-1">
-                  <CardTitle className="text-lg mb-1">{doctor.name}</CardTitle>
+                  <CardTitle className="text-lg mb-2">{doctor.name}</CardTitle>
                   <Badge variant="secondary" className="mb-2">
                     {doctor.specialization}
                   </Badge>
@@ -144,30 +144,44 @@ const Doctors = () => {
               </div>
             </CardHeader>
 
-            <CardContent className="space-y-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="w-4 h-4" />
-                <span>{doctor.experience} years experience</span>
-              </div>
-              
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4" />
-                <span>{doctor.location}</span>
+            <CardContent className="flex flex-col flex-1">
+              <div className="space-y-3 flex-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="w-4 h-4" />
+                  <span>{doctor.experience} years experience</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <MapPin className="w-4 h-4" />
+                  <span>{doctor.location}</span>
+                </div>
+
+                <p className="text-sm text-muted-foreground leading-relaxed">{doctor.bio}</p>
               </div>
 
-              <p className="text-sm text-muted-foreground">{doctor.bio}</p>
-
-              <div className="flex items-center justify-between pt-4 border-t">
-                <div>
-                  <span className="text-lg font-semibold text-primary">${doctor.price}</span>
-                  <span className="text-sm text-muted-foreground">/consultation</span>
+              {/* Fixed bottom section */}
+              <div className="mt-6 pt-4 border-t border-border/50">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">${doctor.price}</div>
+                    <div className="text-xs text-muted-foreground">per consultation</div>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex gap-1">
+                      {doctor.availability.map((day, index) => (
+                        <span key={index} className="px-2 py-1 bg-primary/10 text-primary rounded-md font-medium">
+                          {day}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="btn-hover">
+                    <Button className="w-full bg-gradient-primary hover:opacity-90 text-white font-semibold py-3 rounded-xl shadow-medical hover:shadow-glow transition-all duration-300 hover:scale-[1.02]">
                       <Calendar className="w-4 h-4 mr-2" />
-                      Book Now
+                      Book Consultation
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="max-w-md">
