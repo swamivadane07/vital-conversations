@@ -304,20 +304,39 @@ export const MainSidebar = () => {
 
         {/* Health Tips */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-3">
+          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-4 px-1">
             Daily Health Tips
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 gap-3">
               {quickHealthTips.map((tip, index) => (
-                <Card key={index} className="border-l-4 border-l-primary/30 shadow-card fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <CardContent className="p-3">
-                    <div className="flex items-start gap-2">
-                      <tip.icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${tip.color}`} />
-                      <p className="text-xs text-muted-foreground leading-relaxed">{tip.tip}</p>
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-xl border bg-gradient-to-br from-card/80 to-muted/20 hover:from-primary/5 hover:to-accent/5 border-border/50 hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-soft animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all">
+                        <tip.icon className={`w-5 h-5 ${tip.color} group-hover:scale-110 transition-transform`} />
+                      </div>
+                      <div className="flex-1 text-center sm:text-left">
+                        <p className="text-sm text-foreground leading-relaxed font-medium group-hover:text-primary/90 transition-colors">
+                          {tip.tip}
+                        </p>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                  
+                  {/* Animated border accent */}
+                  <div className={`absolute left-0 top-0 bottom-0 w-1 ${tip.color.replace('text-', 'bg-')} opacity-60 group-hover:opacity-100 transition-opacity rounded-l-xl`} />
+                  
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Subtle sparkle effect on hover */}
+                  <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
+                </div>
               ))}
             </div>
           </SidebarGroupContent>
