@@ -100,6 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       email,
       options: {
         shouldCreateUser: false, // Only allow existing users
+        emailRedirectTo: `${window.location.origin}/auth`,
       }
     })
 
