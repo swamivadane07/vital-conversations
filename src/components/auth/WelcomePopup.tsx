@@ -187,7 +187,7 @@ export const WelcomePopup = ({ isVisible, onClose }: WelcomePopupProps) => {
                         >
                           <div className="p-4 bg-gradient-to-r from-primary/5 via-primary/10 to-primary-glow/5 rounded-lg border border-primary/20">
                             <p className="text-sm text-muted-foreground mb-2">
-                              ✨ This application is developed by
+                              ✨ This application is developed and deployed by
                             </p>
                             <motion.p
                               animate={{ 
@@ -207,7 +207,7 @@ export const WelcomePopup = ({ isVisible, onClose }: WelcomePopupProps) => {
                               transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
                               className="text-sm text-muted-foreground mt-1"
                             >
-                              with ❤️ love
+                              with ❤️, driven by his passion for AI and Cloud
                             </motion.p>
                           </div>
                         </motion.div>
