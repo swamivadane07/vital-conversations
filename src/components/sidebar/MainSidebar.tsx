@@ -141,98 +141,155 @@ export const MainSidebar = () => {
 
         {/* Main Navigation */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-3">
+          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-4 px-1">
             Main Services
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2">
+            <div className="grid grid-cols-1 gap-3">
               {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.path}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.path}
-                      className={({ isActive }) => 
-                        `w-full p-3 rounded-lg border transition-all hover:shadow-soft flex items-center gap-3 ${
-                          isActive 
-                            ? 'bg-primary/10 border-primary/20 shadow-medical text-primary' 
-                            : 'bg-card hover:bg-muted/50 text-foreground'
-                        }`
-                      }
-                    >
-                      <item.icon className="w-5 h-5" />
-                      <div className="text-left">
-                        <div className="font-medium text-sm">{item.title}</div>
-                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={({ isActive }) => 
+                    `group relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.02] hover:shadow-medical ${
+                      isActive 
+                        ? 'bg-gradient-primary text-white shadow-glow border-primary/30' 
+                        : 'bg-card/80 hover:bg-muted/80 text-foreground border-border/50 hover:border-primary/30'
+                    }`
+                  }
+                >
+                  <div className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-all ${
+                        location.pathname === item.path
+                          ? 'bg-white/20 text-white' 
+                          : 'bg-primary/10 text-primary group-hover:bg-primary/20'
+                      }`}>
+                        <item.icon className="w-5 h-5" />
                       </div>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                      <div className="flex-1 text-center sm:text-left">
+                        <div className="font-semibold text-sm mb-1">{item.title}</div>
+                        <div className={`text-xs ${
+                          location.pathname === item.path
+                            ? 'text-white/80' 
+                            : 'text-muted-foreground'
+                        }`}>
+                          {item.description}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </NavLink>
               ))}
-            </SidebarMenu>
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
         {/* Advanced Features */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-3">
+          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-4 px-1">
             AI-Powered Tools
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2">
+            <div className="grid grid-cols-1 gap-3">
               {advancedFeatures.map((item) => (
-                <SidebarMenuItem key={item.path}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.path}
-                      className={({ isActive }) => 
-                        `w-full p-3 rounded-lg border transition-all hover:shadow-soft flex items-center gap-3 ${
-                          isActive 
-                            ? 'bg-gradient-primary text-white shadow-glow' 
-                            : 'bg-card hover:bg-muted/50 text-foreground border-primary/20'
-                        }`
-                      }
-                    >
-                      <item.icon className="w-5 h-5" />
-                      <div className="text-left">
-                        <div className="font-medium text-sm">{item.title}</div>
-                        <div className="text-xs opacity-80">{item.description}</div>
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={({ isActive }) => 
+                    `group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:scale-[1.02] ${
+                      isActive 
+                        ? 'bg-gradient-primary text-white shadow-glow border-primary/50 shadow-primary/20' 
+                        : 'bg-card/60 hover:bg-gradient-to-r hover:from-primary/5 hover:to-accent/5 text-foreground border-primary/20 hover:border-primary/40 hover:shadow-soft'
+                    }`
+                  }
+                >
+                  <div className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2.5 rounded-xl transition-all ${
+                        location.pathname === item.path
+                          ? 'bg-white/20 text-white shadow-sm' 
+                          : 'bg-gradient-to-br from-primary/10 to-accent/10 text-primary group-hover:from-primary/20 group-hover:to-accent/20 group-hover:shadow-sm'
+                      }`}>
+                        <item.icon className="w-5 h-5" />
                       </div>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                      <div className="flex-1 text-center sm:text-left">
+                        <div className="font-semibold text-sm mb-1">{item.title}</div>
+                        <div className={`text-xs ${
+                          location.pathname === item.path
+                            ? 'text-white/90' 
+                            : 'text-muted-foreground group-hover:text-foreground/80'
+                        }`}>
+                          {item.description}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Enhanced hover effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Active indicator */}
+                  {location.pathname === item.path && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white/30 rounded-r-full" />
+                  )}
+                </NavLink>
               ))}
-            </SidebarMenu>
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
         {/* Quick Actions */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-3">
+          <SidebarGroupLabel className="text-sm font-medium text-foreground mb-4 px-1">
             Quick Actions
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2">
+            <div className="grid grid-cols-1 gap-3">
               {quickActions.map((item) => (
-                <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton
-                    onClick={() => setActiveSection(activeSection === item.id ? null : item.id)}
-                    className={`w-full p-3 rounded-lg border transition-all hover:shadow-soft cursor-pointer ${
-                      activeSection === item.id 
-                        ? 'bg-primary/10 border-primary/20 shadow-medical' 
-                        : 'bg-card hover:bg-muted/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 w-full">
-                      <item.icon className={`w-5 h-5 ${item.color}`} />
-                      <div className="flex-1 text-left">
-                        <div className="font-medium text-sm text-foreground">{item.title}</div>
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(activeSection === item.id ? null : item.id)}
+                  className={`group relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
+                    activeSection === item.id 
+                      ? 'bg-primary/10 border-primary/30 shadow-medical' 
+                      : 'bg-card/80 hover:bg-muted/80 border-border/50 hover:border-primary/20 hover:shadow-soft'
+                  }`}
+                >
+                  <div className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-all ${
+                        activeSection === item.id
+                          ? 'bg-primary/20 shadow-sm' 
+                          : 'bg-muted/50 group-hover:bg-primary/10'
+                      }`}>
+                        <item.icon className={`w-5 h-5 ${
+                          activeSection === item.id ? 'text-primary' : item.color
+                        }`} />
+                      </div>
+                      <div className="flex-1 text-center sm:text-left">
+                        <div className="font-semibold text-sm text-foreground mb-1">{item.title}</div>
                         <div className="text-xs text-muted-foreground">{item.description}</div>
                       </div>
+                      {/* Expand indicator */}
+                      <div className={`transition-transform duration-200 ${
+                        activeSection === item.id ? 'rotate-180' : ''
+                      }`}>
+                        <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
                     </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                  </div>
+                  
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </button>
               ))}
-            </SidebarMenu>
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
