@@ -10,7 +10,7 @@ const AIAnalysis = () => {
   const [symptoms, setSymptoms] = useState<string[]>([]);
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full">
       <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">

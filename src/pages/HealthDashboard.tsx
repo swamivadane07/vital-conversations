@@ -87,13 +87,12 @@ export default function HealthDashboard() {
 
   return (
     <div className="h-full bg-gradient-to-br from-background to-accent/10">
-      <div className="h-full overflow-y-auto">
-        <motion.div 
-          className="max-w-7xl mx-auto p-6 space-y-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+      <motion.div 
+        className="max-w-7xl mx-auto p-6 space-y-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
           {/* Header */}
           <motion.div 
             className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
@@ -251,7 +250,6 @@ export default function HealthDashboard() {
             </Card>
           </motion.div>
         </motion.div>
-      </div>
     </div>
   );
 }

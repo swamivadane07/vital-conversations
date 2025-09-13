@@ -120,7 +120,7 @@ export const MainSidebar = () => {
   };
 
   return (
-    <Sidebar className="w-80 min-w-[320px] border-r bg-card shadow-soft flex-shrink-0">
+    <Sidebar className="border-r bg-card shadow-soft">
       <div className="p-4">
         <SidebarTrigger className="mb-4" />
       </div>
