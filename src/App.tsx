@@ -4,7 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+
 import Dashboard from "./pages/Dashboard";
+import Auth from "./pages/Auth";
 import Chat from "./pages/Chat";
 import Doctors from "./pages/Doctors";
 import LabTests from "./pages/LabTests";
@@ -30,32 +34,39 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />}>
-            <Route index element={<Chat />} />
-            <Route path="doctors" element={<Doctors />} />
-            <Route path="lab-tests" element={<LabTests />} />
-            <Route path="health-dashboard" element={<HealthDashboard />} />
-            <Route path="advanced-search" element={<AdvancedSearch />} />
-            <Route path="voice-input" element={<VoiceInput />} />
-            <Route path="ai-analysis" element={<AIAnalysis />} />
-            <Route path="pharmacy" element={<PharmacyDashboard />} />
-            <Route path="pharmacy/upload-prescription" element={<PrescriptionUpload />} />
-            <Route path="pharmacy/catalog" element={<MedicineCatalog />} />
-            <Route path="pharmacy/cart" element={<PharmacyCart />} />
-            <Route path="pharmacy/checkout" element={<PharmacyCheckout />} />
-            <Route path="pharmacy/track" element={<OrderTracking />} />
-            <Route path="pharmacy/orders" element={<OrderHistory />} />
-            <Route path="pharmacy/profile" element={<PharmacyProfile />} />
-            <Route path="online-store" element={<OnlineStore />} />
-          </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+        <AuthProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }>
+                <Route index element={<Chat />} />
+                <Route path="doctors" element={<Doctors />} />
+                <Route path="lab-tests" element={<LabTests />} />
+                <Route path="health-dashboard" element={<HealthDashboard />} />
+                <Route path="advanced-search" element={<AdvancedSearch />} />
+                <Route path="voice-input" element={<VoiceInput />} />
+                <Route path="ai-analysis" element={<AIAnalysis />} />
+                <Route path="pharmacy" element={<PharmacyDashboard />} />
+                <Route path="pharmacy/upload-prescription" element={<PrescriptionUpload />} />
+                <Route path="pharmacy/catalog" element={<MedicineCatalog />} />
+                <Route path="pharmacy/cart" element={<PharmacyCart />} />
+                <Route path="pharmacy/checkout" element={<PharmacyCheckout />} />
+                <Route path="pharmacy/track" element={<OrderTracking />} />
+                <Route path="pharmacy/orders" element={<OrderHistory />} />
+                <Route path="pharmacy/profile" element={<PharmacyProfile />} />
+                <Route path="online-store" element={<OnlineStore />} />
+              </Route>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { UserMenu } from "@/components/auth/LogoutButton";
 import { SymptomChecker } from "./SymptomChecker";
 import { AppointmentScheduler } from "./AppointmentScheduler";
 import { EmergencyInfo } from "./EmergencyInfo";
@@ -142,14 +143,17 @@ export const MainSidebar = () => {
       <SidebarContent className="p-4">
         {/* Header */}
         <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-gradient-medical rounded-lg shadow-glow">
-              <Stethoscope className="w-5 h-5 text-white" />
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-medical rounded-lg shadow-glow">
+                <Stethoscope className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="font-semibold text-foreground">HealthCare Pro</h2>
+                <p className="text-xs text-muted-foreground">Your medical companion</p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-semibold text-foreground">HealthCare Pro</h2>
-              <p className="text-xs text-muted-foreground">Your medical companion</p>
-            </div>
+            <UserMenu />
           </div>
         </div>
 
