@@ -23,12 +23,12 @@ export const WelcomePopup = ({ isVisible, onClose }: WelcomePopupProps) => {
     }
   }, [isVisible]);
 
-  // Auto close after 6 seconds
+  // Auto close after 10 seconds
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 6000);
+      }, 10000);
       return () => clearTimeout(timer);
     }
   }, [isVisible, onClose]);
@@ -228,7 +228,7 @@ export const WelcomePopup = ({ isVisible, onClose }: WelcomePopupProps) => {
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: 6, ease: "linear" }}
+                    transition={{ duration: 10, ease: "linear" }}
                     className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary via-primary-glow to-primary"
                   />
                 </div>
