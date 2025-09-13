@@ -270,7 +270,7 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
                         size="sm" 
                         variant="outline"
                         onClick={() => callHospital(hospital.phone)}
-                        className="h-8 px-3"
+                        className="h-8 w-10 px-0 flex items-center justify-center"
                       >
                         <Phone className="w-3 h-3" />
                       </Button>
