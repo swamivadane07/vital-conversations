@@ -42,6 +42,12 @@ export const MainSidebar = () => {
       description: "Medical AI Assistant"
     },
     {
+      title: "Health Dashboard",
+      icon: Activity,
+      path: "/health-dashboard",
+      description: "Advanced health insights"
+    },
+    {
       title: "Find Doctors",
       icon: Users,
       path: "/doctors",
