@@ -2,6 +2,7 @@ import { Phone, MapPin, Clock, AlertTriangle, Heart, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { HospitalFinder } from "@/components/emergency/HospitalFinder";
 
 export const EmergencyInfo = () => {
   const emergencyContacts = [
@@ -133,27 +134,7 @@ export const EmergencyInfo = () => {
         </Card>
 
         {/* Location Services */}
-        <Card className="border-accent/20 bg-accent/5">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-accent-foreground mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="font-semibold mb-2 text-sm text-accent-foreground">Find Nearest Hospital</p>
-                <p className="mb-3 text-sm text-accent-foreground/80 leading-relaxed">
-                  Enable location services for fastest emergency response
-                </p>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="text-sm h-8 border-accent-foreground/30 hover:bg-accent-foreground/10"
-                >
-                  <MapPin className="w-3 h-3 mr-2" />
-                  Enable Location
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <HospitalFinder onLocationEnabled={(loc) => console.log('Location enabled:', loc)} />
 
         {/* Important Note */}
         <div className="p-4 bg-muted/50 border border-border rounded-lg">
