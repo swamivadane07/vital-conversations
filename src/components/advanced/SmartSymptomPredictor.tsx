@@ -15,7 +15,7 @@ interface SymptomPrediction {
 }
 
 interface SmartSymptomPredictorProps {
-  symptoms: string[];
+  symptoms?: string[];
   demographics?: {
     age?: number;
     gender?: string;
@@ -23,7 +23,7 @@ interface SmartSymptomPredictorProps {
   };
 }
 
-export const SmartSymptomPredictor = ({ symptoms, demographics }: SmartSymptomPredictorProps) => {
+export const SmartSymptomPredictor = ({ symptoms = [], demographics }: SmartSymptomPredictorProps) => {
   const [predictions, setPredictions] = useState<SymptomPrediction[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [riskScore, setRiskScore] = useState(0);
