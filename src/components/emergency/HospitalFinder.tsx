@@ -226,20 +226,24 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
         {/* Hospital Results */}
         {hospitals.length > 0 && (
           <div className="space-y-4">
-            <h4 className="font-semibold text-sm text-accent-foreground">
+            <h4 className="text-sm font-medium text-foreground mb-4 px-1">
               Nearby Hospitals ({hospitals.length} found)
             </h4>
             
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 gap-3">
               {hospitals.slice(0, 3).map((hospital) => (
-                <Card key={hospital.id} className="border-accent/10 bg-background/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
+                <div 
+                  key={hospital.id} 
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:scale-[1.02] bg-card/60 hover:bg-gradient-to-r hover:from-primary/5 hover:to-accent/5 text-foreground border-primary/20 hover:border-primary/40 hover:shadow-soft"
+                >
+                  <div className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 text-primary group-hover:from-primary/20 group-hover:to-accent/20 group-hover:shadow-sm transition-all">
+                        <MapPin className="w-5 h-5" />
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <h5 className="font-semibold text-sm text-foreground mb-2 truncate">
-                          {hospital.name}
-                        </h5>
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <div className="font-semibold text-sm mb-1 truncate">{hospital.name}</div>
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
                           <Badge variant={hospital.emergencyServices ? "destructive" : "secondary"} className="text-xs">
                             {hospital.emergencyServices ? "Emergency" : hospital.type}
                           </Badge>
@@ -248,20 +252,21 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
                             <span className="text-xs text-muted-foreground">{hospital.rating}</span>
                           </div>
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{hospital.address}</p>
                       </div>
-                      <div className="text-right ml-3 flex-shrink-0">
+                      <div className="text-right flex-shrink-0">
                         <Badge variant="outline" className="text-xs font-medium">
                           {hospital.distance.toFixed(1)} mi
                         </Badge>
                       </div>
                     </div>
                     
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed px-1">{hospital.address}</p>
+                    
                     <div className="flex gap-2">
                       <Button 
                         size="sm" 
                         onClick={() => openDirections(hospital)}
-                        className="flex-1 h-8 text-xs font-medium"
+                        className="flex-1 h-8 text-xs font-medium bg-gradient-primary hover:opacity-90"
                       >
                         <Navigation className="w-3 h-3 mr-2" />
                         Directions
@@ -270,13 +275,13 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
                         size="sm" 
                         variant="outline"
                         onClick={() => callHospital(hospital.phone)}
-                        className="h-8 w-10 px-0 flex items-center justify-center"
+                        className="h-8 w-10 px-0 flex items-center justify-center border-primary/20 hover:border-primary/40"
                       >
                         <Phone className="w-3 h-3" />
                       </Button>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
