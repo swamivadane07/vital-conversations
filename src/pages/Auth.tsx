@@ -47,7 +47,7 @@ type SignupForm = z.infer<typeof signupSchema>
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
 
 export default function Auth() {
-  const [mode, setMode] = useState<'login' | 'signup' | 'forgot' | 'otp'>('login')
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot' | 'otp'>('otp')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [language, setLanguage] = useState('en')
