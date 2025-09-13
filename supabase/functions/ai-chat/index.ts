@@ -49,18 +49,24 @@ AI Doctor:`;
             max_new_tokens: 150,
             temperature: 0.7,
             do_sample: true,
-            pad_token_id: 50256
-          }
+            pad_token_id: 50256,
+            top_p: 0.9
+          },
+          options: { wait_for_model: true, use_cache: false }
         }),
       }
     );
 
     if (!response.ok) {
-      console.error('Hugging Face API error:', response.status, response.statusText);
-      // Fallback response
-      return new Response(JSON.stringify({ 
-        response: "I'm here to help with your health questions. Could you please provide more details about your concern? Remember to consult with healthcare professionals for serious medical issues."
-      }), {
+      const errorText = await response.text();
+      console.error('Hugging Face API error:', response.status, response.statusText, errorText);
+
+      let fallback = "I'm here to help with your health questions. Could you please provide more details about your concern? Remember to consult with healthcare professionals for serious medical issues.";
+      if (response.status === 503 || response.status === 429) {
+        fallback = "The AI model is starting up or busy right now. Please try again in a few seconds. If the issue persists, we'll continue to provide general guidance. Always consult healthcare professionals for serious concerns.";
+      }
+
+      return new Response(JSON.stringify({ response: fallback }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
