@@ -139,7 +139,8 @@ const LabTests = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 fade-in">
+    <div className="h-full overflow-y-auto">
+      <div className="max-w-7xl mx-auto p-6 space-y-6 fade-in">
       {/* Header */}
       <div className="flex justify-between items-start mb-8">
         <div>
@@ -268,11 +269,12 @@ const LabTests = () => {
         ))}
       </div>
 
-      {filteredTests.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No lab tests found matching your criteria.</p>
-        </div>
-      )}
+        {filteredTests.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No lab tests found matching your criteria.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

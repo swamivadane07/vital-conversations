@@ -10,56 +10,61 @@ const AIAnalysis = () => {
   const [symptoms, setSymptoms] = useState<string[]>([]);
 
   return (
-    <div className="p-6 space-y-6 fade-in">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">AI Health Analysis</h1>
-        <p className="text-muted-foreground">Advanced AI-powered health insights and risk assessment tools</p>
-      </div>
-      
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="card-hover shadow-card">
-          <CardContent className="p-6 text-center">
-            <Brain className="w-8 h-8 mx-auto mb-3 text-primary" />
-            <h3 className="font-semibold mb-1">AI Analysis</h3>
-            <p className="text-sm text-muted-foreground">Smart symptom prediction</p>
-          </CardContent>
-        </Card>
+    <div className="h-full overflow-y-auto">
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">AI Analysis</h1>
+            <p className="text-muted-foreground">Advanced health insights powered by artificial intelligence</p>
+          </div>
+        </div>
         
-        <Card className="card-hover shadow-card">
-          <CardContent className="p-6 text-center">
-            <Activity className="w-8 h-8 mx-auto mb-3 text-accent" />
-            <h3 className="font-semibold mb-1">Risk Assessment</h3>
-            <p className="text-sm text-muted-foreground">Health risk evaluation</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="card-hover shadow-card">
-          <CardContent className="p-6 text-center">
-            <User className="w-8 h-8 mx-auto mb-3 text-success" />
-            <h3 className="font-semibold mb-1">Body Analysis</h3>
-            <p className="text-sm text-muted-foreground">Interactive body diagram</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Interactive Body Diagram */}
-        <Card className="card-hover shadow-card">
-          <CardHeader>
-            <CardTitle>Interactive Body Diagram</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <InteractiveBodyDiagram />
-          </CardContent>
-        </Card>
-
-        {/* AI Symptom Predictor */}
-        <div className="space-y-6">
-          <SmartSymptomPredictor symptoms={symptoms} />
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
+          <Card className="card-hover shadow-card">
+            <CardContent className="p-4 lg:p-6 text-center">
+              <Brain className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-3 text-primary" />
+              <h3 className="font-semibold mb-1 text-sm lg:text-base">AI Analysis</h3>
+              <p className="text-xs lg:text-sm text-muted-foreground">Smart symptom prediction</p>
+            </CardContent>
+          </Card>
           
-          {/* Health Risk Assessment */}
-          <HealthRiskAssessment />
+          <Card className="card-hover shadow-card">
+            <CardContent className="p-4 lg:p-6 text-center">
+              <Activity className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-3 text-accent" />
+              <h3 className="font-semibold mb-1 text-sm lg:text-base">Risk Assessment</h3>
+              <p className="text-xs lg:text-sm text-muted-foreground">Health risk evaluation</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="card-hover shadow-card">
+            <CardContent className="p-4 lg:p-6 text-center">
+              <User className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-3 text-success" />
+              <h3 className="font-semibold mb-1 text-sm lg:text-base">Body Analysis</h3>
+              <p className="text-xs lg:text-sm text-muted-foreground">Interactive body diagram</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
+          {/* Interactive Body Diagram */}
+          <Card className="card-hover shadow-card">
+            <CardHeader>
+              <CardTitle className="text-lg lg:text-xl">Interactive Body Diagram</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <InteractiveBodyDiagram />
+            </CardContent>
+          </Card>
+
+          {/* AI Symptom Predictor */}
+          <div className="space-y-6">
+            <SmartSymptomPredictor symptoms={symptoms} />
+            
+            {/* Health Risk Assessment */}
+            <HealthRiskAssessment />
+          </div>
         </div>
       </div>
     </div>

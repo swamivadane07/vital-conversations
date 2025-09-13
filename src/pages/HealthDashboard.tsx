@@ -86,169 +86,172 @@ export default function HealthDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-accent/10 p-6">
-      <motion.div 
-        className="max-w-7xl mx-auto space-y-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Header */}
+    <div className="h-full bg-gradient-to-br from-background to-accent/10">
+      <div className="h-full overflow-y-auto">
         <motion.div 
-          className="flex justify-between items-center"
-          variants={cardVariants}
+          className="max-w-7xl mx-auto p-6 space-y-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">Health Dashboard</h1>
-            <p className="text-muted-foreground">Track your health journey and progress</p>
-          </div>
-          <Button onClick={exportToPDF} className="bg-gradient-primary hover:opacity-90">
-            <Download className="w-4 h-4 mr-2" />
-            Export Report
-          </Button>
-        </motion.div>
+          {/* Header */}
+          <motion.div 
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
+            variants={cardVariants}
+          >
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">Health Dashboard</h1>
+              <p className="text-muted-foreground">Track your health journey and progress</p>
+            </div>
+            <Button onClick={exportToPDF} className="bg-gradient-primary hover:opacity-90 self-start sm:self-auto">
+              <Download className="w-4 h-4 mr-2" />
+              Export Report
+            </Button>
+          </motion.div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            { title: 'Total Appointments', value: '15', icon: Calendar, color: 'text-primary' },
-            { title: 'Lab Tests Completed', value: '8', icon: Activity, color: 'text-accent' },
-            { title: 'Health Score', value: '92/100', icon: Heart, color: 'text-secondary' },
-            { title: 'Days Streak', value: '23', icon: TrendingUp, color: 'text-destructive' }
-          ].map((stat, index) => (
-            <motion.div key={stat.title} variants={cardVariants}>
-              <Card className="relative overflow-hidden">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">{stat.title}</p>
-                      <p className="text-2xl font-bold">{stat.value}</p>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            {[
+              { title: 'Total Appointments', value: '15', icon: Calendar, color: 'text-primary' },
+              { title: 'Lab Tests Completed', value: '8', icon: Activity, color: 'text-accent' },
+              { title: 'Health Score', value: '92/100', icon: Heart, color: 'text-secondary' },
+              { title: 'Days Streak', value: '23', icon: TrendingUp, color: 'text-destructive' }
+            ].map((stat, index) => (
+              <motion.div key={stat.title} variants={cardVariants}>
+                <Card className="relative overflow-hidden shadow-card hover:shadow-medical transition-shadow">
+                  <CardContent className="p-4 lg:p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">{stat.title}</p>
+                        <p className="text-xl lg:text-2xl font-bold">{stat.value}</p>
+                      </div>
+                      <stat.icon className={`w-6 h-6 lg:w-8 lg:h-8 ${stat.color}`} />
                     </div>
-                    <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Health Metrics Chart */}
+          <motion.div variants={cardVariants}>
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg lg:text-xl">
+                  <BarChart3 className="w-5 h-5" />
+                  Health Metrics Trends
+                </CardTitle>
+                <div className="flex flex-wrap gap-2">
+                  {['bloodPressure', 'heartRate', 'weight'].map((metric) => (
+                    <Button
+                      key={metric}
+                      variant={selectedMetric === metric ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedMetric(metric)}
+                      className="text-xs"
+                    >
+                      {metric.charAt(0).toUpperCase() + metric.slice(1).replace(/([A-Z])/g, ' $1')}
+                    </Button>
+                  ))}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <AreaChart data={healthMetrics}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area 
+                      type="monotone" 
+                      dataKey={selectedMetric} 
+                      stroke="hsl(var(--primary))" 
+                      fill="hsl(var(--primary) / 0.2)" 
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {/* Health Goals */}
+            <motion.div variants={cardVariants}>
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle className="text-lg lg:text-xl">Daily Health Goals</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {healthGoals.map((goal, index) => (
+                    <div key={goal.name} className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="font-medium">{goal.name}</span>
+                        <span className="text-muted-foreground">{goal.current} / {goal.target}</span>
+                      </div>
+                      <Progress 
+                        value={(goal.current / goal.target) * 100} 
+                        className="h-2"
+                      />
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Lab Results */}
+            <motion.div variants={cardVariants}>
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle className="text-lg lg:text-xl">Recent Lab Results</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {labResults.map((result, index) => (
+                      <div key={result.name} className="flex items-center justify-between p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div>
+                          <p className="font-medium text-sm lg:text-base">{result.name}</p>
+                          <p className="text-xs lg:text-sm text-muted-foreground">Value: {result.value}</p>
+                        </div>
+                        <div className="text-right">
+                          <span 
+                            className="px-2 py-1 rounded-full text-xs font-medium"
+                            style={{ 
+                              backgroundColor: result.color + '20',
+                              color: result.color 
+                            }}
+                          >
+                            {result.status}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
-          ))}
-        </div>
+          </div>
 
-        {/* Health Metrics Chart */}
-        <motion.div variants={cardVariants}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5" />
-                Health Metrics Trends
-              </CardTitle>
-              <div className="flex gap-2">
-                {['bloodPressure', 'heartRate', 'weight'].map((metric) => (
-                  <Button
-                    key={metric}
-                    variant={selectedMetric === metric ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedMetric(metric)}
-                  >
-                    {metric.charAt(0).toUpperCase() + metric.slice(1).replace(/([A-Z])/g, ' $1')}
-                  </Button>
-                ))}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={healthMetrics}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Area 
-                    type="monotone" 
-                    dataKey={selectedMetric} 
-                    stroke="hsl(var(--primary))" 
-                    fill="hsl(var(--primary) / 0.2)" 
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Health Goals */}
+          {/* Appointment Analytics */}
           <motion.div variants={cardVariants}>
-            <Card>
+            <Card className="shadow-card">
               <CardHeader>
-                <CardTitle>Daily Health Goals</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {healthGoals.map((goal, index) => (
-                  <div key={goal.name} className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>{goal.name}</span>
-                      <span>{goal.current} / {goal.target}</span>
-                    </div>
-                    <Progress 
-                      value={(goal.current / goal.target) * 100} 
-                      className="h-2"
-                    />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Lab Results */}
-          <motion.div variants={cardVariants}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Lab Results</CardTitle>
+                <CardTitle className="text-lg lg:text-xl">Appointment Analytics</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {labResults.map((result, index) => (
-                    <div key={result.name} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
-                        <p className="font-medium">{result.name}</p>
-                        <p className="text-sm text-muted-foreground">Value: {result.value}</p>
-                      </div>
-                      <div className="text-right">
-                        <span 
-                          className="px-2 py-1 rounded-full text-xs font-medium"
-                          style={{ 
-                            backgroundColor: result.color + '20',
-                            color: result.color 
-                          }}
-                        >
-                          {result.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={appointmentData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="appointments" fill="hsl(var(--primary))" />
+                  </BarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </motion.div>
-        </div>
-
-        {/* Appointment Analytics */}
-        <motion.div variants={cardVariants}>
-          <Card>
-            <CardHeader>
-              <CardTitle>Appointment Analytics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={appointmentData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="appointments" fill="hsl(var(--primary))" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }

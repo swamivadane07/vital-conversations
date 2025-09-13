@@ -7,8 +7,10 @@ const Dashboard = () => {
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
         <MainSidebar />
-        <main className="flex-1 overflow-hidden">
-          <Outlet />
+        <main className="flex-1 min-w-0 overflow-y-auto">
+          <div className="h-full">
+            <Outlet />
+          </div>
         </main>
       </div>
     </SidebarProvider>
