@@ -13,6 +13,8 @@ interface AuthContextType {
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<{ error: any }>
   loading: boolean
+  showWelcomePopup: boolean
+  setShowWelcomePopup: (show: boolean) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -25,6 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
@@ -33,6 +36,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       (event, session) => {
         setSession(session)
         setUser(session?.user ?? null)
+        
+        // Show welcome popup on successful sign in
+        if (event === 'SIGNED_IN' && session?.user) {
+          setShowWelcomePopup(true)
+        }
+        
         setLoading(false)
       }
     )
@@ -185,7 +194,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     verifyOTP,
     signOut,
     resetPassword,
-    loading
+    loading,
+    showWelcomePopup,
+    setShowWelcomePopup
   }
 
   return (
