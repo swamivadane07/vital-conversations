@@ -1,0 +1,124 @@
+{
+  "name": "MediCare Assistant - AI Healthcare Platform",
+  "short_name": "MediCare AI",
+  "description": "Advanced AI-powered healthcare platform for consultations, lab tests, and health management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "categories": ["health", "medical", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "AI Chat",
+      "short_name": "Chat",
+      "description": "Start a conversation with the AI health assistant",
+      "url": "/chat",
+      "icons": [{ "src": "/icons/chat-shortcut.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Book Doctor",
+      "short_name": "Doctors",
+      "description": "Find and book appointments with doctors",
+      "url": "/doctors",
+      "icons": [{ "src": "/icons/doctor-shortcut.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Lab Tests",
+      "short_name": "Lab Tests",
+      "description": "Browse and book laboratory tests",
+      "url": "/lab-tests",
+      "icons": [{ "src": "/icons/lab-shortcut.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Health Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your health metrics and analytics",
+      "url": "/dashboard",
+      "icons": [{ "src": "/icons/dashboard-shortcut.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "AI Health Assistant Dashboard"
+    },
+    {
+      "src": "/screenshots/mobile-1.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Mobile Health Chat Interface"
+    }
+  ],
+  "features": [
+    "AI-powered health assistant",
+    "Doctor consultations and booking",
+    "Laboratory test ordering",
+    "Health metrics tracking",
+    "Interactive symptom checker",
+    "Voice input support",
+    "Offline capabilities",
+    "Health data export"
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "id": "medicare-ai-assistant",
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
+}
