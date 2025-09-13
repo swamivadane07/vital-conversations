@@ -169,15 +169,15 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
       <CardContent className="space-y-4">
         {/* Location Enable */}
         {!location && (
-          <div className="space-y-3">
-            <p className="text-sm text-accent-foreground/80">
+          <div className="space-y-4">
+            <p className="text-sm text-accent-foreground/80 leading-relaxed">
               Enable location services for fastest emergency response
             </p>
             
             {locationError && (
               <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
                 <p className="text-sm text-destructive flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4" />
+                  <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                   {locationError}
                 </p>
               </div>
@@ -186,7 +186,7 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
             <Button 
               onClick={enableLocation}
               disabled={loading}
-              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-10"
             >
               {loading ? (
                 <>
@@ -205,17 +205,17 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
 
         {/* Location Enabled */}
         {location && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-success">
-              <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-              Location enabled - Showing nearby hospitals
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse flex-shrink-0" />
+              <span>Location enabled - Showing nearby hospitals</span>
             </div>
 
             <Button 
               onClick={() => findNearbyHospitals(location)}
               variant="outline"
               size="sm"
-              className="w-full"
+              className="w-full h-9"
             >
               <MapPin className="w-4 h-4 mr-2" />
               Refresh Results
@@ -225,64 +225,66 @@ export function HospitalFinder({ onLocationEnabled }: HospitalFinderProps) {
 
         {/* Hospital Results */}
         {hospitals.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-medium text-sm text-accent-foreground">
+          <div className="space-y-4">
+            <h4 className="font-semibold text-sm text-accent-foreground">
               Nearby Hospitals ({hospitals.length} found)
             </h4>
             
-            {hospitals.slice(0, 3).map((hospital) => (
-              <Card key={hospital.id} className="border-accent/10">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h5 className="font-medium text-sm text-foreground mb-1">
-                        {hospital.name}
-                      </h5>
-                      <div className="flex items-center gap-2 mb-1">
-                        <Badge variant={hospital.emergencyServices ? "destructive" : "secondary"} className="text-xs">
-                          {hospital.emergencyServices ? "Emergency" : hospital.type}
-                        </Badge>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                          <span className="text-xs text-muted-foreground">{hospital.rating}</span>
+            <div className="space-y-3">
+              {hospitals.slice(0, 3).map((hospital) => (
+                <Card key={hospital.id} className="border-accent/10 bg-background/50">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1 min-w-0">
+                        <h5 className="font-semibold text-sm text-foreground mb-2 truncate">
+                          {hospital.name}
+                        </h5>
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <Badge variant={hospital.emergencyServices ? "destructive" : "secondary"} className="text-xs">
+                            {hospital.emergencyServices ? "Emergency" : hospital.type}
+                          </Badge>
+                          <div className="flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                            <span className="text-xs text-muted-foreground">{hospital.rating}</span>
+                          </div>
                         </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{hospital.address}</p>
                       </div>
-                      <p className="text-xs text-muted-foreground mb-2">{hospital.address}</p>
+                      <div className="text-right ml-3 flex-shrink-0">
+                        <Badge variant="outline" className="text-xs font-medium">
+                          {hospital.distance.toFixed(1)} mi
+                        </Badge>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <Badge variant="outline" className="text-xs">
-                        {hospital.distance.toFixed(1)} mi
-                      </Badge>
+                    
+                    <div className="flex gap-2">
+                      <Button 
+                        size="sm" 
+                        onClick={() => openDirections(hospital)}
+                        className="flex-1 h-8 text-xs font-medium"
+                      >
+                        <Navigation className="w-3 h-3 mr-2" />
+                        Directions
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => callHospital(hospital.phone)}
+                        className="h-8 px-3"
+                      >
+                        <Phone className="w-3 h-3" />
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <div className="flex gap-2">
-                    <Button 
-                      size="sm" 
-                      onClick={() => openDirections(hospital)}
-                      className="flex-1 h-7 text-xs"
-                    >
-                      <Navigation className="w-3 h-3 mr-1" />
-                      Directions
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => callHospital(hospital.phone)}
-                      className="h-7 text-xs"
-                    >
-                      <Phone className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Emergency Note */}
-        <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-          <p className="text-xs text-destructive text-center font-medium">
+        <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+          <p className="text-sm text-destructive text-center font-medium leading-relaxed">
             ⚡ For life-threatening emergencies, call 911 immediately
           </p>
         </div>
