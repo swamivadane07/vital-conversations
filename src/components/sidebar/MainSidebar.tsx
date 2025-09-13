@@ -14,7 +14,8 @@ import {
   Home,
   Search,
   Mic,
-  Zap
+  Zap,
+  Pill
 } from "lucide-react";
 import {
   Sidebar,
@@ -61,6 +62,12 @@ export const MainSidebar = () => {
       icon: TestTube,
       path: "/lab-tests",
       description: "Book diagnostic tests"
+    },
+    {
+      title: "Pharmacy",
+      icon: Pill,
+      path: "/pharmacy",
+      description: "Online medicine delivery"
     }
   ];
 

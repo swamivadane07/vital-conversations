@@ -19,6 +19,9 @@ import MedicineCatalog from "./pages/pharmacy/MedicineCatalog";
 import PharmacyCart from "./pages/pharmacy/PharmacyCart";
 import PharmacyCheckout from "./pages/pharmacy/PharmacyCheckout";
 import OrderTracking from "./pages/pharmacy/OrderTracking";
+import OrderHistory from "./pages/pharmacy/OrderHistory";
+import PharmacyProfile from "./pages/pharmacy/PharmacyProfile";
+import PharmacyDashboard from "./pages/pharmacy/PharmacyDashboard";
 
 const queryClient = new QueryClient();
 
@@ -38,12 +41,14 @@ const App = () => (
             <Route path="advanced-search" element={<AdvancedSearch />} />
             <Route path="voice-input" element={<VoiceInput />} />
             <Route path="ai-analysis" element={<AIAnalysis />} />
-            <Route path="pharmacy" element={<Pharmacy />} />
+            <Route path="pharmacy" element={<PharmacyDashboard />} />
             <Route path="pharmacy/upload-prescription" element={<PrescriptionUpload />} />
             <Route path="pharmacy/catalog" element={<MedicineCatalog />} />
             <Route path="pharmacy/cart" element={<PharmacyCart />} />
             <Route path="pharmacy/checkout" element={<PharmacyCheckout />} />
             <Route path="pharmacy/track" element={<OrderTracking />} />
+            <Route path="pharmacy/orders" element={<OrderHistory />} />
+            <Route path="pharmacy/profile" element={<PharmacyProfile />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
