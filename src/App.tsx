@@ -33,6 +33,7 @@ import QuickActionsPage from "./pages/QuickActions";
 import ScheduleAppointment from "./pages/ScheduleAppointment";
 import SymptomCheckerPage from "./pages/SymptomChecker";
 import EmergencyHelpPage from "./pages/EmergencyHelp";
+import ActivityTracking from "./pages/ActivityTracking";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const AppWithPopup = () => {
           <Route path="schedule-appointment" element={<ScheduleAppointment />} />
           <Route path="symptom-checker" element={<SymptomCheckerPage />} />
           <Route path="emergency-help" element={<EmergencyHelpPage />} />
+          <Route path="activity-tracking" element={<ActivityTracking />} />
         </Route>
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

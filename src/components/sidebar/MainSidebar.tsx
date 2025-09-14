@@ -76,6 +76,12 @@ export const MainSidebar = () => {
       description: "Online medicine delivery"
     },
     {
+      title: "Activity Tracking",
+      icon: Activity,
+      path: "/activity-tracking",
+      description: "Monitor fitness & activities"
+    },
+    {
       title: "Online Store",
       icon: Store,
       path: "/online-store",
