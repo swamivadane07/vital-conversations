@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      activities: {
+        Row: {
+          activity_name: string
+          activity_type: string
+          calories_burned: number | null
+          created_at: string
+          date: string
+          duration_minutes: number
+          id: string
+          notes: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_name: string
+          activity_type: string
+          calories_burned?: number | null
+          created_at?: string
+          date?: string
+          duration_minutes: number
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activity_name?: string
+          activity_type?: string
+          calories_burned?: number | null
+          created_at?: string
+          date?: string
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       allergies: {
         Row: {
           allergen: string
@@ -54,6 +93,60 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          appointment_type: string
+          contact_number: string
+          created_at: string
+          doctor_type: string
+          id: string
+          patient_name: string
+          payment_id: string | null
+          payment_status: string
+          reason: string | null
+          status: string
+          total_amount: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          appointment_type: string
+          contact_number: string
+          created_at?: string
+          doctor_type: string
+          id?: string
+          patient_name: string
+          payment_id?: string | null
+          payment_status?: string
+          reason?: string | null
+          status?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          appointment_type?: string
+          contact_number?: string
+          created_at?: string
+          doctor_type?: string
+          id?: string
+          patient_name?: string
+          payment_id?: string | null
+          payment_status?: string
+          reason?: string | null
+          status?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       medical_documents: {
         Row: {
