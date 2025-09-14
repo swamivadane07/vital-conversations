@@ -30,6 +30,9 @@ import PharmacyProfile from "./pages/pharmacy/PharmacyProfile";
 import PharmacyDashboard from "./pages/pharmacy/PharmacyDashboard";
 import OnlineStore from "./pages/OnlineStore";
 import QuickActionsPage from "./pages/QuickActions";
+import ScheduleAppointment from "./pages/ScheduleAppointment";
+import SymptomCheckerPage from "./pages/SymptomChecker";
+import EmergencyHelpPage from "./pages/EmergencyHelp";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +67,9 @@ const AppWithPopup = () => {
           <Route path="pharmacy/profile" element={<PharmacyProfile />} />
           <Route path="online-store" element={<OnlineStore />} />
           <Route path="quick-actions" element={<QuickActionsPage />} />
+          <Route path="schedule-appointment" element={<ScheduleAppointment />} />
+          <Route path="symptom-checker" element={<SymptomCheckerPage />} />
+          <Route path="emergency-help" element={<EmergencyHelpPage />} />
         </Route>
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

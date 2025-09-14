@@ -33,9 +33,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserMenu } from "@/components/auth/LogoutButton";
-import { SymptomChecker } from "./SymptomChecker";
-import { AppointmentScheduler } from "./AppointmentScheduler";
-import { EmergencyInfo } from "./EmergencyInfo";
 
 export const MainSidebar = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -113,21 +110,24 @@ export const MainSidebar = () => {
       icon: Stethoscope,
       id: "symptoms",
       description: "Analyze your symptoms",
-      color: "text-blue-600"
+      color: "text-blue-600",
+      path: "/symptom-checker",
     },
     {
       title: "Schedule Appointment",
       icon: Calendar,
       id: "appointments",
       description: "Book with healthcare providers",
-      color: "text-green-600"
+      color: "text-green-600",
+      path: "/schedule-appointment",
     },
     {
       title: "Emergency Help",
       icon: Phone,
       id: "emergency",
       description: "Urgent medical contacts",
-      color: "text-red-600"
+      color: "text-red-600",
+      path: "/emergency-help",
     }
   ];
 
@@ -275,57 +275,45 @@ export const MainSidebar = () => {
           <SidebarGroupContent>
             <div className="grid grid-cols-1 gap-3">
               {quickActions.map((item) => (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => setActiveSection(activeSection === item.id ? null : item.id)}
-                  className={`group relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
-                    activeSection === item.id 
-                      ? 'bg-primary/10 border-primary/30 shadow-medical' 
-                      : 'bg-card/80 hover:bg-muted/80 border-border/50 hover:border-primary/20 hover:shadow-soft'
-                  }`}
+                  to={item.path}
+                  className={({ isActive }) => 
+                    `group relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
+                      isActive 
+                        ? 'bg-primary/10 border-primary/30 shadow-medical' 
+                        : 'bg-card/80 hover:bg-muted/80 border-border/50 hover:border-primary/20 hover:shadow-soft'
+                    }`
+                  }
                 >
                   <div className="p-4">
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-lg transition-all ${
-                        activeSection === item.id
+                        location.pathname === item.path
                           ? 'bg-primary/20 shadow-sm' 
                           : 'bg-muted/50 group-hover:bg-primary/10'
                       }`}>
                         <item.icon className={`w-5 h-5 ${
-                          activeSection === item.id ? 'text-primary' : item.color
+                          location.pathname === item.path ? 'text-primary' : item.color
                         }`} />
                       </div>
                       <div className="flex-1 text-center sm:text-left">
                         <div className="font-semibold text-sm text-foreground mb-1">{item.title}</div>
                         <div className="text-xs text-muted-foreground">{item.description}</div>
                       </div>
-                      {/* Expand indicator */}
-                      <div className={`transition-transform duration-200 ${
-                        activeSection === item.id ? 'rotate-180' : ''
-                      }`}>
-                        <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
+                      {/* Active indicator */}
+                      {location.pathname === item.path && (
+                        <div className="w-1 h-6 bg-primary/40 rounded-full" />
+                      )}
                     </div>
                   </div>
-                  
-                  {/* Hover effect overlay */}
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
+                </NavLink>
               ))}
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Active Section Content */}
-        {activeSection && (
-          <div className="mt-6 slide-in-right">
-            {activeSection === "symptoms" && <SymptomChecker />}
-            {activeSection === "appointments" && <AppointmentScheduler />}
-            {activeSection === "emergency" && <EmergencyInfo />}
-          </div>
-        )}
 
         {/* Health Tips */}
         <SidebarGroup className="mt-6">
