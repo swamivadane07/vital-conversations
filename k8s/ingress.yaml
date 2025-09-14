@@ -17,7 +17,7 @@ metadata:
     # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:YOUR_ACCOUNT_ID:certificate/YOUR_CERT_ID
 spec:
   rules:
-  - host: MedchatBotNLB01-8599e28beee5f22d.elb.us-east-1.amazonaws.com  # Replace with your actual domain
+  - host: medchatbotnlb01-8599e28beee5f22d.elb.us-east-1.amazonaws.com # Replace with your actual domain
     http:
       paths:
       - path: /
