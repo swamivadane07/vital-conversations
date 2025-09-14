@@ -3,7 +3,6 @@ import { ChatArea } from "@/components/chat/ChatArea";
 import { Message } from "@/components/MedicalChatbot";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import QuickActions from "@/components/QuickActions";
 
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -72,19 +71,11 @@ const Chat = () => {
   };
 
   return (
-    <div className="h-full flex flex-col lg:flex-row gap-6 p-6">
-      {/* Quick Actions Sidebar */}
-      <div className="w-full lg:w-1/3 flex-shrink-0">
-        <QuickActions />
-      </div>
-      
-      {/* Chat Area */}
-      <div className="flex-1 min-h-0">
-        <ChatArea 
-          messages={messages} 
-          onSendMessage={handleSendMessage}
-        />
-      </div>
+    <div className="h-full">
+      <ChatArea 
+        messages={messages} 
+        onSendMessage={handleSendMessage}
+      />
     </div>
   );
 };

@@ -16,7 +16,8 @@ import {
   Mic,
   Zap,
   Pill,
-  Store
+  Store,
+  Gauge
 } from "lucide-react";
 import {
   Sidebar,
@@ -46,6 +47,12 @@ export const MainSidebar = () => {
       icon: MessageCircle,
       path: "/",
       description: "Medical AI Assistant"
+    },
+    {
+      title: "Quick Actions",
+      icon: Gauge,
+      path: "/quick-actions",
+      description: "Essential health services & emergency contacts"
     },
     {
       title: "Health Dashboard",
