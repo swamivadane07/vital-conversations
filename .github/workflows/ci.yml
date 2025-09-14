@@ -22,7 +22,8 @@ jobs:
         run: |
           npm install
           npm run build
-          npm install --legacy-peer-deps
+          npm install --force
+
 
 
       # Step 2: Configure AWS credentials
