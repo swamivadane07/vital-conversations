@@ -1,8 +1,38 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: medical-app-config
-  namespace: medical-app
+  name: frontend-config
+  namespace: medical-app-frontend
 data:
   SUPABASE_URL: "https://yqkxhgkffylajgwsgrog.supabase.co"
-  SUPABASE_PUBLISHABLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlxa3hoZ2tmZnlsYWpnd3Nncm9nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3ODYyNDgsImV4cCI6MjA3MzM2MjI0OH0.a42KNGuzdq1YmHmWrEdTtnjdcFU11YYaohGdH7IpzY0"
+  NODE_ENV: "production"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: frontend-secrets
+  namespace: medical-app-frontend
+type: Opaque
+stringData:
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlxa3hoZ2tmZnlsYWpnd3Nncm9nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3ODYyNDgsImV4cCI6MjA3MzM2MjI0OH0.a42KNGuzdq1YmHmWrEdTtnjdcFU11YYaohGdH7IpzY0"
+  SUPABASE_SERVICE_ROLE_KEY: "your-service-role-key"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: medical-app-backend
+data:
+  SUPABASE_URL: "https://yqkxhgkffylajgwsgrog.supabase.co"
+  NODE_ENV: "production"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: medical-app-backend
+type: Opaque
+stringData:
+  SUPABASE_SERVICE_ROLE_KEY: "your-service-role-key"
+  RESEND_API_KEY: "your-resend-api-key"
+  STRIPE_SECRET_KEY: "your-stripe-secret-key"

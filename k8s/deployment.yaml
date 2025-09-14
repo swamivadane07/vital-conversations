@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: medical-app-frontend
-  namespace: medical-app
+  namespace: medical-app-frontend
   labels:
     app: medical-app-frontend
 spec:
@@ -28,6 +28,22 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+        env:
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: NODE_ENV
+        - name: SUPABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: SUPABASE_URL
+        - name: SUPABASE_ANON_KEY
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: SUPABASE_ANON_KEY
         livenessProbe:
           httpGet:
             path: /
@@ -40,6 +56,3 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
-        env:
-        - name: NODE_ENV
-          value: "production"

@@ -1,6 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: medical-app
+  name: medical-app-frontend
   labels:
-    name: medical-app
+    name: medical-app-frontend
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: medical-app-backend
+  labels:
+    name: medical-app-backend

@@ -50,13 +50,13 @@ kubectl apply -f k8s/ingress.yaml
 
 # Wait for deployment to be ready
 echo "⏳ Waiting for deployment to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment/medical-app-frontend -n medical-app
+kubectl wait --for=condition=available --timeout=300s deployment/medical-app-frontend -n medical-app-frontend
 
 # Get deployment status
 echo "📊 Deployment Status:"
-kubectl get pods -n medical-app
-kubectl get services -n medical-app
-kubectl get ingress -n medical-app
+kubectl get pods -n medical-app-frontend
+kubectl get services -n medical-app-frontend
+kubectl get ingress -n medical-app-frontend
 
 echo "✅ Medical App deployed successfully to EKS!"
 echo "🌐 Your app will be available at the ALB endpoint shown above"

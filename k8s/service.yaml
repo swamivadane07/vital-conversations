@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: medical-app-frontend-service
-  namespace: medical-app
+  namespace: medical-app-frontend
   labels:
     app: medical-app-frontend
 spec:
