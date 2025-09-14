@@ -17,14 +17,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: "npm"   # speeds up installs
 
       - name: Install dependencies and build
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
-          npm install --force
-
-
 
       # Step 2: Configure AWS credentials
       - name: Configure AWS Credentials
