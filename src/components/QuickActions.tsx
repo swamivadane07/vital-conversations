@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -8,31 +9,35 @@ import {
   AlertTriangle, 
   Phone, 
   MessageSquare,
-  Headphones 
+  Headphones,
+  ArrowLeft 
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SymptomChecker } from "@/components/sidebar/SymptomChecker";
+import { AppointmentScheduler } from "@/components/sidebar/AppointmentScheduler";
+import { EmergencyInfo } from "@/components/sidebar/EmergencyInfo";
 
 const QuickActions = () => {
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const quickActions = [
     {
       title: "Symptom Checker",
       description: "Analyze your symptoms",
       icon: Stethoscope,
-      href: "/advanced-search",
+      action: "symptom-checker",
       variant: "default" as const
     },
     {
-      title: "Schedule Appointment",
+      title: "Schedule Appointment", 
       description: "Book with healthcare providers",
       icon: Calendar,
-      href: "/doctors",
+      action: "appointment-scheduler",
       variant: "secondary" as const
     },
     {
       title: "Emergency Help",
       description: "Urgent medical contacts",
       icon: AlertTriangle,
-      href: "#emergency-contacts",
+      action: "emergency-info",
       variant: "destructive" as const
     }
   ];
@@ -68,6 +73,38 @@ const QuickActions = () => {
     }
   ];
 
+  // If an active section is selected, show it
+  if (activeSection) {
+    return (
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setActiveSection(null)}
+                className="p-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+              <CardTitle className="text-xl font-semibold">
+                {activeSection === "symptom-checker" && "Symptom Checker"}
+                {activeSection === "appointment-scheduler" && "Schedule Appointment"}
+                {activeSection === "emergency-info" && "Emergency Help"}
+              </CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {activeSection === "symptom-checker" && <SymptomChecker />}
+            {activeSection === "appointment-scheduler" && <AppointmentScheduler />}
+            {activeSection === "emergency-info" && <EmergencyInfo />}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Quick Actions */}
@@ -86,15 +123,13 @@ const QuickActions = () => {
                 variant={action.variant}
                 size="lg"
                 className="h-auto p-4 flex flex-col items-center space-y-2"
-                asChild
+                onClick={() => setActiveSection(action.action)}
               >
-                <Link to={action.href}>
-                  <action.icon className="h-8 w-8" />
-                  <div className="text-center">
-                    <div className="font-semibold">{action.title}</div>
-                    <div className="text-sm opacity-90">{action.description}</div>
-                  </div>
-                </Link>
+                <action.icon className="h-8 w-8" />
+                <div className="text-center">
+                  <div className="font-semibold">{action.title}</div>
+                  <div className="text-sm opacity-90">{action.description}</div>
+                </div>
               </Button>
             ))}
           </div>
