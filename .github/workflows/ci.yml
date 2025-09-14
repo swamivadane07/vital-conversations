@@ -1,5 +1,6 @@
 name: Deploy Frontend to EKS
 
+
 on:
   push:
     branches: ["main"]
