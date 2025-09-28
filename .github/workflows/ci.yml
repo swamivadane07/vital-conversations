@@ -50,7 +50,7 @@ jobs:
       # Step 5: Update kubeconfig
       - name: Update kubeconfig for EKS
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name medcarai_cluster_01
+          aws eks update-kubeconfig --region us-east-1 --name Medcare-chatbot-02-cluster-v1
 
       #- name: Deploy to EKS
       - name: Deployed to EKS
